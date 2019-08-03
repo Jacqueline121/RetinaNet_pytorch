@@ -1,15 +1,16 @@
 import torch
 import torch.nn as nn
 from RetinaNet.FPN import FPN50
+from config.config import cfg
 
 
 class RetinaNet(nn.Module):
-    def __init__(self, class_num=20):
+    def __init__(self):
         super(RetinaNet, self).__init__()
         self.anchor_num = 9
-        self.class_num = class_num
+        self.class_num = cfg.CLASS_NUM
         self.fpn = FPN50()
-        self.cls_head = self._make_heads(self.anchor_num * class_num)
+        self.cls_head = self._make_heads(self.anchor_num * self.class_num)
         self.loc_head = self._make_heads(self.anchor_num * 4)
         self.out_act = nn.Sigmoid()
 

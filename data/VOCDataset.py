@@ -2,22 +2,12 @@ import os
 import torch
 from torch.utils.data import Dataset, DataLoader
 import torchvision.transforms as transforms
-from PIL import Image
-import torchvision
-from utils.data_augmentation import resize, random_flip, random_crop, center_crop
-#from target.target import get_target
-from target.my_targets import get_target
+from utils.data_augmentation import resize, random_flip
+from target.targets import get_target
 from config.config import cfg
-from PIL import ImageDraw, Image
-from target.anchors import generate_anchors
-import numpy as np
+from PIL import Image
 
-
-root_dir = os.path.join(os.path.dirname(__file__), '')
-
-image_dir = os.path.join(root_dir, 'dataset/voc07_JPEGImages')
-anno_file = os.path.join(root_dir, 'dataset/voc07_val.txt')
-
+dataset_dir = os.path.join(os.path.dirname(__file__), 'dataset')
 
 class VOCDataset(Dataset):
     def __init__(self, transform, train):
@@ -27,6 +17,10 @@ class VOCDataset(Dataset):
         self.image_names = []
         self.boxes = []
         self.labels = []
+        if self.train:
+            anno_file = os.path.join(dataset_dir, cfg.DATASET_NAME, 'ImageSets', 'train.txt')
+        else:
+            anno_file = os.path.join(dataset_dir, cfg.DATASET_NAME, 'ImageSets', 'test.txt')
         with open(anno_file) as f:
             lines = f.readlines()
             self.num_samples = len(lines)
@@ -50,6 +44,7 @@ class VOCDataset(Dataset):
             self.labels.append(torch.LongTensor(label))
 
     def __getitem__(self, idx):
+        image_dir = os.path.join(dataset_dir, cfg.DATASET_NAME, 'JPEGImages')
         image_name = self.image_names[idx]
         image = Image.open(os.path.join(image_dir, image_name))
 
@@ -57,7 +52,8 @@ class VOCDataset(Dataset):
             image = image.convert('RGB')
         boxes = self.boxes[idx].clone()
         labels = self.labels[idx]
-        im_size = image.size
+        image_idx = image_name.split('.')[0]
+        im_info = [int(image_idx), image.size[0], image.size[1]]
 
         input_size = cfg.INPUT_SIZE
 
@@ -66,30 +62,29 @@ class VOCDataset(Dataset):
             image, boxes = resize(image, boxes, input_size)
         else:
             image, boxes = resize(image, boxes, input_size)
-            image, boxes = center_crop(image, boxes, input_size)
 
         image = self.transform(image)
-        return image, boxes, labels, im_size
+        return image, boxes, labels, im_info
 
     def collate_fn(self, batch):
         images = [x[0] for x in batch]
         boxes = [x[1] for x in batch]
         labels = [x[2] for x in batch]
-        im_sizes = [x[3] for x in batch]
+        im_infos = [x[3] for x in batch]
 
         w, h = cfg.INPUT_SIZE[0], cfg.INPUT_SIZE[1]
         num_images = len(images)
         inputs = torch.zeros(num_images, 3, h, w)
         cls_targets = []
         loc_targets = []
-        im_sizes = torch.Tensor(im_sizes)
+        im_infos = torch.Tensor(im_infos)
 
         for i in range(num_images):
             inputs[i] = images[i]
             cls_target, loc_target = get_target(boxes[i], labels[i])
             cls_targets.append(cls_target)
             loc_targets.append(loc_target)
-        return inputs, torch.stack(cls_targets), torch.stack(loc_targets), im_sizes
+        return inputs, torch.stack(cls_targets), torch.stack(loc_targets), im_infos
 
     def __len__(self):
         return self.num_samples
@@ -105,13 +100,12 @@ if __name__ == '__main__':
 
     dataloader = DataLoader(dataset, batch_size=2, shuffle=False, num_workers=1, collate_fn=dataset.collate_fn)
     for i in range(10):
-        for images, cls_targets, loc_targets, im_sizes in dataloader:
+        for images, cls_targets, loc_targets, im_infos in dataloader:
             print(images.size())
             print(loc_targets.size())
             print(cls_targets.size())
-            print(im_sizes.size())
-            grid = torchvision.utils.make_grid(images, 1)
-            torchvision.utils.save_image(grid, 'a.jpg')
+            image_name = '00' + format(str(int(im_infos[0][0].data)), '0>4s')
+            print(image_name)
             break
         break
 

@@ -27,6 +27,12 @@ class FocalLoss(nn.Module):
             loc_pred = loc_preds[i, :, :]
             cls_target = cls_targets[i, :, :]
             loc_target = loc_targets[i, :, :]
+            #cls_t_max, cls_t_argmax = torch.max(cls_target, dim=-1)
+            #id = torch.argmax(cls_t_max)
+           # print(cls_target[id, :])
+
+            #cls_p_max, cls_p_argmax = torch.max(cls_pred, dim=-1)
+            #print(cls_pred[id, :])
 
             cls_max, _ = torch.max(cls_target, dim=-1)
             pos_idx = torch.eq(cls_max, 1.)
@@ -46,6 +52,7 @@ class FocalLoss(nn.Module):
             focal_weight = alpha_factor * torch.pow(focal_weight, gamma)
 
             bce = -(cls_target * torch.log(cls_pred) + (1.0 - cls_target) * torch.log(1.0 - cls_pred))
+            # cls_loss = focal_weight * torch.pow(bce, gamma)
             cls_loss = focal_weight * bce
 
             cls_loss = torch.where(torch.ne(cls_target, -1.0), cls_loss, torch.zeros(cls_loss.size()).cuda())

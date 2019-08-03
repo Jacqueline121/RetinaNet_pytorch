@@ -2,6 +2,7 @@ import torch
 from config.config import cfg
 from target.anchors import generate_anchors
 from utils.box_operation import box_transform_inv, xywh2xyxy, box_ious
+from utils.one_hot import one_hot_embedding
 
 
 def get_pred_boxes(loc_preds):
@@ -71,30 +72,11 @@ def nms(pred_boxes, cls_max, nms_thresh):
 
     return torch.LongTensor(keep)
 
-def one_hot_embedding(labels, num_classes):
-    '''Embedding labels to one-hot form.
 
-    Args:
-      labels: (LongTensor) class labels, sized [N,].
-      num_classes: (int) number of classes.
+def eval(output, cls_thresh=0.5, nms_thresh=0.5):
 
-    Returns:
-      (tensor) encoded labels, sized [N,#classes].
-    '''
-    y = torch.eye(num_classes)  # [D,D]
-    return y[labels]            # [N,D]
-
-
-def eval(output, cls_thresh=0.5, nms_thresh=0.05):
-
-    cls_preds = output[0].view(-1, cfg.NUM_CLASS).cpu()
-
-    # testing
-    #cls_preds = output[0].view(-1)
-    #cls_preds = one_hot_embedding(cls_preds, 20).view(-1, 20)
-
+    cls_preds = output[0].view(-1, cfg.CLASS_NUM).cpu()
     loc_preds = output[1].view(-1, 4).cpu()
-
     im_sizes = output[2].cpu()
 
     # 1. get predicted boxes
@@ -103,6 +85,9 @@ def eval(output, cls_thresh=0.5, nms_thresh=0.05):
     # 2. filter boxes whose cls_score is less than cls_thresh
     cls_preds, pred_boxes = filter_boxes(cls_preds, pred_boxes, cls_thresh)
 
+    if pred_boxes.size(0) == 0:
+        return []
+
     # 3. rescale the pred_boxes
     pred_boxes = rescale_boxes(pred_boxes, im_sizes) # xyxy
 
@@ -110,7 +95,7 @@ def eval(output, cls_thresh=0.5, nms_thresh=0.05):
     detections = []
     cls_max, cls_argmax = torch.max(cls_preds, dim=1, keepdim=True)
 
-    for i in range(1, cfg.NUM_CLASS):
+    for i in range(cfg.CLASS_NUM):
         idx = torch.nonzero(cls_argmax == i).squeeze()
 
         if idx.numel() == 0:

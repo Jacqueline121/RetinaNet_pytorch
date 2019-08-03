@@ -1,15 +1,14 @@
 import torch
 
 
-def one_hot_embedding(labels, num_classes):
-    '''Embedding labels to one-hot form.
-    Args:
-      labels: (LongTensor) class labels, sized [N,].
-      num_classes: (int) number of classes.
-    Returns:
-      (tensor) encoded labels, sized [N,#classes].
+def one_hot_embedding(labels, class_num):
     '''
-    y = torch.eye(num_classes)  # [D,D]
+    Embedding labels to one-hot form
+    :param labels: class labels, size: [N,]
+    :param class_num: number of classes.
+    :return: encoded label, size: [N, class_num]
+    '''
+    y = torch.eye(class_num)  # [D,D]
     return y[labels]            # [N,D]
 
 
