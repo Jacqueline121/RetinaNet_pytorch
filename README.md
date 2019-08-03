@@ -1,6 +1,6 @@
 # RetinaNet_pytorch
 
-A Python3.5/Pytroch implementation of RetinaNet:[Focal Loss for Dense Object Detection](https://arxiv.org/abs/1708.02002). And the official implementations are available [here](https://github.com/facebookresearch/Detectron). Besides, special thanks for those two repositories：
+A Python3.5/Pytroch implementation of RetinaNet: [Focal Loss for Dense Object Detection](https://arxiv.org/abs/1708.02002). And the official implementations are available [here](https://github.com/facebookresearch/Detectron). Besides, special thanks for those two repositories：
 * [pytorch-retinanet](https://github.com/kuangliu/pytorch-retinanet)
 * [pytorch-retinanet](https://github.com/yhenon/pytorch-retinanet)
 
@@ -17,13 +17,13 @@ A Python3.5/Pytroch implementation of RetinaNet:[Focal Loss for Dense Object Det
 * pickle
 
 ### Repo Organization
-* RetinaNet: neural networks and components that form parts of RetinaNet.
-* config: define configuration information of Faster RCNN.
-* data: scripts for creating, downloading, organizing datasets.
-* loss: implementation of focal loss.
-* pretrained_model: get and store pretrained ResNet model.
-* targets: generate anchors and calculate targets.
-* utils: tools package, containing some necessary functions.
+* **RetinaNet**: neural networks and components that form parts of RetinaNet.
+* **config**: define configuration information of Faster RCNN.
+* **data**: scripts for creating, downloading, organizing datasets.
+* **loss**: implementation of focal loss.
+* **pretrained_model**: get and store pretrained ResNet model.
+* **targets**: generate anchors and calculate targets.
+* **utils**: tools package, containing some necessary functions.
 
 ### Installation
 
@@ -57,21 +57,23 @@ For PASCAL VOC, you can follow the instructions in this [repository](https://git
     |           +-- JPEGImages
     |           +-- Results
 
-* Annotations: store annotaion information(.xml file) for each images.
-* Cache: store annotaion cache.
-* ImageSets: store training dataset and testing dataset(.txt file) with the format:
-* JPEGImages: store images.
-* Results: store detection results.
+* **Annotations**: store annotaion information(.xml file) for each images.
+* **Cache**: store annotaion cache.
+* **ImageSets**: store training dataset and testing dataset(.txt file) with the format:
+* **JPEGImages**: store images.
+* **Results**: store detection results.
 
 You can also use your own dataset as long as you follow the file structure desribed above to store the data.
 
 #### Get pretrained model
 1. Download the pretrained ResNet model: [ResNet50](https://drive.google.com/open?id=0B7fNdx_jAqhtbllXbWxMVEdZclE), [ResNet101](https://drive.google.com/open?id=0B7fNdx_jAqhtbllXbWxMVEdZclE).
 
-2. Put the pretrained model in  $PROJECT/pretrained_model
+2. Put the pretrained model in '$PROJECT/pretrained_model'
 
-3. cd   $PROJECT/pretrained_model
+3. cd '$PROJECT/pretrained_model'
+    '''
     python get_pretrained_model.py
+    '''
 
     It will produce a 'model.pth' file.
 
