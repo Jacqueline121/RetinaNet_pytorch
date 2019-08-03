@@ -1,6 +1,6 @@
 import torch
 from config.config import cfg
-from target.anchors import generate_anchors
+from targets.anchors import generate_anchors
 from utils.box_operation import box_ious, xywh2xyxy, xyxy2xywh, box_transform, box_iou
 
 

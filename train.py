@@ -55,7 +55,7 @@ def train():
     # load model
     print('load model')
     model = RetinaNet()
-    model.load_state_dict(torch.load('./model/model.pth'))
+    model.load_state_dict(torch.load('./pretrained_model/model.pth'))
     model.freeze_bn()
     if args.use_GPU:
         model = model.cuda()

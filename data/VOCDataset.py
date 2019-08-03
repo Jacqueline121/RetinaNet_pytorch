@@ -3,7 +3,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 import torchvision.transforms as transforms
 from utils.data_augmentation import resize, random_flip
-from target.targets import get_target
+from targets.targets import get_target
 from config.config import cfg
 from PIL import Image
 
