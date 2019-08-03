@@ -105,14 +105,14 @@ def train():
 
             if (step + 1) % args.display_interval == 0:
                 train_loss /= args.display_interval
-                print('[%d epoch | %d step]cls_loss: %.3f | loc_loss: %.3f | avg_loss: %.3f | fg_acc: %.3f' %
+                print('[%d epoch | %d step]cls_loss: %.3f | loc_loss: %.3f | avg_loss: %.3f | cls_acc: %.3f' %
                     (epoch, step, cls_loss.item(), loc_loss.item(), train_loss, float(tp)/float(fg)))
                 if args.use_tfboard:
                     n_iter = epoch * iter_per_epoch + step + 1
                     writer.add_scalar('losses/loss', train_loss, n_iter)
                     writer.add_scalar('losses/cls_loss', cls_loss.item(), n_iter)
                     writer.add_scalar('losses/loc_loss', loc_loss.item(), n_iter)
-                    writer.add_scalar('acc/fg_acc', float(tp) / fg, n_iter)
+                    writer.add_scalar('acc/cls_acc', float(tp) / float(fg), n_iter)
                 train_loss = 0
                 fg, tp = 0, 0
 
