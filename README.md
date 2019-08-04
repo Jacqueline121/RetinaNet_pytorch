@@ -25,10 +25,14 @@ A Python3.5/Pytroch implementation of RetinaNet: [Focal Loss for Dense Object De
 #### Acc and Loss
 The training loss and accuracy :
 
-![Alt text](/result/loss_and_acc.PNG)
+![Alt text](/result/loss_and_acc.png)
 
 #### Detection Results
+VOC2007 detection results:
 ![Alt text](/result/results.png)
+
+LUNA16 detection results:
+![Alt text](/result/results_luna.png)
 
 ### Repo Organization
 * **RetinaNet**: neural networks and components that form parts of RetinaNet.
