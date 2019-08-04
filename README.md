@@ -14,6 +14,22 @@ A Python3.5/Pytroch implementation of RetinaNet: [Focal Loss for Dense Object De
 * matplotlib
 * easydict
 
+### Results
+#### mAP
+* Backbone: ResNet50
+
+| VOC2007 | LUNA16 |
+| :-: | :-: |
+| 76.6 | 65.4 |
+
+#### Acc and Loss
+The training loss and accuracy :
+
+![Alt text](/result/loss_and_acc.PNG)
+
+#### Detection Results
+![Alt text](/result/results.png)
+
 ### Repo Organization
 * **RetinaNet**: neural networks and components that form parts of RetinaNet.
 * **config**: define configuration information of Faster RCNN.
@@ -77,7 +93,10 @@ You can also use your own dataset as long as you follow the file structure desri
     It will produce a 'model.pth' file.
 
 #### Train
+    python train.py --dataset='Dataset_Name'
+For example:
     python train.py --dataset='VOC2007'
+
 
 ### Test
     python test.py --dataset='VOC2007'
