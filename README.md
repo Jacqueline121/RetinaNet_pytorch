@@ -38,22 +38,24 @@ A Python3.5/Pytroch implementation of RetinaNet: [Focal Loss for Dense Object De
 #### Prepare the Data
 For PASCAL VOC, you can follow the instructions in this [repository](https://github.com/Jacqueline121/Faster_RCNN_pytorch) to download the data. And then, you can store date according the following structure:
 
-|+-- data
-|   |+-- dataset
-|       |+-- VOC2007
-|           |+-- Annotations
-|               |+-- xxxx.xml
-|           |+-- Cache
-|           |+-- ImageSets
-|           |+-- JPEGImages
-|           |+-- Results
-|       |+-- VOC2012
-|           |+-- Annotations
-|               |+-- xxxx.xml
-|           |+-- Cache
-|           |+-- ImageSets
-|           |+-- JPEGImages
-|           |+-- Results
+```
+|+-- data    
+|   |+-- dataset    
+|       |+-- VOC2007    
+|           |+-- Annotations    
+|               |+-- xxxx.xml    
+|           |+-- Cache    
+|           |+-- ImageSets    
+|           |+-- JPEGImages    
+|           |+-- Results    
+|       |+-- VOC2012    
+|           |+-- Annotations    
+|               |+-- xxxx.xml    
+|           |+-- Cache    
+|           |+-- ImageSets    
+|           |+-- JPEGImages    
+|           |+-- Results    
+```
 
 * **Annotations**: store annotaion information(.xml file) for each images.
 * **Cache**: store annotaion cache.
