@@ -66,9 +66,9 @@ You can also use your own dataset as long as you follow the file structure desri
 #### Get pretrained model
 1. Download the pretrained ResNet model: [ResNet50](https://drive.google.com/open?id=0B7fNdx_jAqhtbllXbWxMVEdZclE), [ResNet101](https://drive.google.com/open?id=0B7fNdx_jAqhtbllXbWxMVEdZclE).
 
-2. Put the pretrained model in ·$PROJECT/pretrained_model·
+2. Put the pretrained model in ~$PROJECT/pretrained_model~
 
-3. cd ·$PROJECT/pretrained_model·
+3. cd ~$PROJECT/pretrained_model~
 
         python get_pretrained_model.py
 
