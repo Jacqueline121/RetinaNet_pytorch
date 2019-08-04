@@ -11,10 +11,8 @@ A Python3.5/Pytroch implementation of RetinaNet: [Focal Loss for Dense Object De
 * pillow
 * scipy
 * numpy
-* PIL
 * matplotlib
 * easydict
-* pickle
 
 ### Repo Organization
 * **RetinaNet**: neural networks and components that form parts of RetinaNet.
@@ -71,7 +69,7 @@ You can also use your own dataset as long as you follow the file structure desri
 2. Put the pretrained model in '$PROJECT/pretrained_model'
 
 3. cd '$PROJECT/pretrained_model'
-    '''
+    '''python
     python get_pretrained_model.py
     '''
 
