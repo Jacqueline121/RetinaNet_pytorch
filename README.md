@@ -37,23 +37,23 @@ A Python3.5/Pytroch implementation of RetinaNet: [Focal Loss for Dense Object De
 ### Train
 #### Prepare the Data
 For PASCAL VOC, you can follow the instructions in this [repository](https://github.com/Jacqueline121/Faster_RCNN_pytorch) to download the data. And then, you can store date according the following structure:
-    .
-    +-- data
-    |   +-- dataset
-    |       +-- VOC2007
-    |           +-- Annotations
-    |               +-- xxxx.xml
-    |           +-- Cache
-    |           +-- ImageSets
-    |           +-- JPEGImages
-    |           +-- Results
-    |       +-- VOC2012
-    |           +-- Annotations
-    |               +-- xxxx.xml
-    |           +-- Cache
-    |           +-- ImageSets
-    |           +-- JPEGImages
-    |           +-- Results
+
+|+-- data
+|   |+-- dataset
+|       |+-- VOC2007
+|           |+-- Annotations
+|               |+-- xxxx.xml
+|           |+-- Cache
+|           |+-- ImageSets
+|           |+-- JPEGImages
+|           |+-- Results
+|       |+-- VOC2012
+|           |+-- Annotations
+|               |+-- xxxx.xml
+|           |+-- Cache
+|           |+-- ImageSets
+|           |+-- JPEGImages
+|           |+-- Results
 
 * **Annotations**: store annotaion information(.xml file) for each images.
 * **Cache**: store annotaion cache.
@@ -66,9 +66,9 @@ You can also use your own dataset as long as you follow the file structure desri
 #### Get pretrained model
 1. Download the pretrained ResNet model: [ResNet50](https://drive.google.com/open?id=0B7fNdx_jAqhtbllXbWxMVEdZclE), [ResNet101](https://drive.google.com/open?id=0B7fNdx_jAqhtbllXbWxMVEdZclE).
 
-2. Put the pretrained model in ~$PROJECT/pretrained_model~
+2. Put the pretrained model in `$PROJECT/pretrained_model`
 
-3. cd ~$PROJECT/pretrained_model~
+3. cd `$PROJECT/pretrained_model`
 
         python get_pretrained_model.py
 
