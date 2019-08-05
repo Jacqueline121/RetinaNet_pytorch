@@ -31,6 +31,14 @@ The training loss and accuracy :
 VOC2007 detection results:
 ![Alt text](/result/results.png)
 
+LUNA16: lung nodules detection. The mAP for different anchor scale and aspect ratios:
+| Anchor_Scale | Aspect_ratio | mAP |
+| :-: | :-: | :-: |
+| 4 | (1.0, 2.0, 0.5) | 46.2 |
+| 1 | (1.0, 2.0, 0.5) | 54.1 |
+| 1 | (1.0) | 56.5 |
+| 1 | (1.0, 1.2, 0.8) | 65.4 |
+
 LUNA16 detection results:
 ![Alt text](/result/results_luna.png)
 
