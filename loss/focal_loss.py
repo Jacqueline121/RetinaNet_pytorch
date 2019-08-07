@@ -27,12 +27,6 @@ class FocalLoss(nn.Module):
             loc_pred = loc_preds[i, :, :]
             cls_target = cls_targets[i, :, :]
             loc_target = loc_targets[i, :, :]
-            #cls_t_max, cls_t_argmax = torch.max(cls_target, dim=-1)
-            #id = torch.argmax(cls_t_max)
-           # print(cls_target[id, :])
-
-            #cls_p_max, cls_p_argmax = torch.max(cls_pred, dim=-1)
-            #print(cls_pred[id, :])
 
             cls_max, _ = torch.max(cls_target, dim=-1)
             pos_idx = torch.eq(cls_max, 1.)
