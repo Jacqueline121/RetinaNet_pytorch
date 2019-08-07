@@ -1,6 +1,6 @@
 import torch
 from config.config import cfg
-from target.anchors import generate_anchors
+from targets.anchors import generate_anchors
 from utils.box_operation import box_transform_inv, xywh2xyxy, box_ious
 from utils.one_hot import one_hot_embedding
 
