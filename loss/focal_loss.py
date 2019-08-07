@@ -8,7 +8,6 @@ class FocalLoss(nn.Module):
 
     def forward(self, cls_preds, cls_targets, loc_preds, loc_targets):
         '''
-
         :param cls_preds: [batch_size, num_anchors, 20]
         :param cls_targets: [batch_size, num_anchors, 20]
         :param loc_preds: [batch_size, num_anchors, 4]
@@ -36,25 +35,20 @@ class FocalLoss(nn.Module):
                 loc_losses.append(torch.tensor(0).float().cuda())
                 cls_losses.append(torch.tensor(0).float().cuda())
                 continue
-
+            
+            # cls loss
             cls_pred = torch.clamp(cls_pred, 1e-4, 1.0 - 1e-4)
-
             alpha_factor = torch.ones(cls_target.size()).cuda() * alpha
-
             alpha_factor = torch.where(torch.eq(cls_target, 1.), alpha_factor, 1. - alpha_factor)
             focal_weight = torch.where(torch.eq(cls_target, 1.), 1. - cls_pred, cls_pred)
             focal_weight = alpha_factor * torch.pow(focal_weight, gamma)
 
             bce = -(cls_target * torch.log(cls_pred) + (1.0 - cls_target) * torch.log(1.0 - cls_pred))
-            # cls_loss = focal_weight * torch.pow(bce, gamma)
             cls_loss = focal_weight * bce
-
             cls_loss = torch.where(torch.ne(cls_target, -1.0), cls_loss, torch.zeros(cls_loss.size()).cuda())
-
             cls_losses.append(cls_loss.sum() / torch.clamp(num_pos.float(), min=1.0))
 
-            # compute the loss for regression
-
+            # loc loss
             if pos_idx.sum() > 0:
                 loc_target = loc_target[pos_idx, :]
                 loc_pred = loc_pred[pos_idx, :]
