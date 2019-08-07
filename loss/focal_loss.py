@@ -31,7 +31,9 @@ class FocalLoss(nn.Module):
             pos_idx = torch.eq(cls_max, 1.)
             num_pos = pos_idx.sum()
 
-            if loc_target.size(0) == 0:
+            neg_idx = torch.eq(cls_max, -1.)
+
+            if neg_idx.sum() == loc_target.size(0):
                 loc_losses.append(torch.tensor(0).float().cuda())
                 cls_losses.append(torch.tensor(0).float().cuda())
                 continue
